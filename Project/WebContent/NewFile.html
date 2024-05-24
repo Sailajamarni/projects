@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coupon Example</title>
+    <!-- Include jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* CSS for hiding the coupon popup initially */
+        #couponPopup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        .couponItem {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Button to show coupon popup -->
+    <button id="coupon">Apply Coupon</button>
+
+    <!-- Hidden container to display coupons -->
+    <div id="couponPopup">
+        <!-- Coupons will be dynamically added here -->
+    </div>
+
+    <script>
+        // JavaScript/jQuery code to show coupons on button click
+        $(document).ready(function() {
+            $('#coupon').click(function() {
+                $('#couponPopup').show(); // Show the coupon popup
+                loadCoupons(); // Load and display coupons
+            });
+        });
+
+        // Function to load and display coupons dynamically
+        function loadCoupons() {
+            // Simulated data - replace with actual coupon data from server/database
+            var coupons = [
+                { id: 1, name: 'Coupon 1', amount: 100 },
+                { id: 2, name: 'Coupon 2', amount: 200 },
+                { id: 3, name: 'Coupon 3', amount: 300 }
+            ];
+
+            var couponContainer = $('#couponPopup');
+            couponContainer.empty(); // Clear previous coupons
+
+            // Create HTML for each coupon and append to popup container
+            coupons.forEach(function(coupon) {
+                var couponHtml = `
+                    <div class="couponItem">
+                		
+                        <strong>ID:</strong> ${coupon.id}<br>
+                        <strong>Name:</strong> ${coupon.name}<br>
+                        <strong>Amount:</strong> ${coupon.amount}<br>
+                        <button onclick="applyCoupon(${coupon.amount})">Add</button>
+                    </div>
+                `;
+                couponContainer.append(couponHtml);
+            });
+        }
+
+        // Function to apply selected coupon
+        function applyCoupon(amount) {
+            // Perform coupon application logic here (e.g., update total amount)
+            var currentAmount = parseInt(document.getElementById('totalprice').textContent.trim());
+            var newAmount = currentAmount - amount;
+            document.getElementById('totalprice').textContent = 'Total Price: ' + newAmount;
+            $('#coupon').hide(); // Hide the main coupon button
+            alert("Coupon Applied Successfully!");
+        }
+    </script>
+</body>
+</html>
